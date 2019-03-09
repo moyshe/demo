@@ -1,10 +1,23 @@
 package pl.sii.springtraining.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) //dont't mind it ;)
 public class Employee {
 
+  @Id
+  @GeneratedValue
   private Long id;
   private String name;
   private String department;
+
+  public Employee() {
+
+  }
 
   public Employee(Long id, String name, String department) {
     this.id = id;
