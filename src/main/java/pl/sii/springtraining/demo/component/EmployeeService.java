@@ -10,8 +10,10 @@ import pl.sii.springtraining.demo.model.Employee;
 public class EmployeeService {
 
   private final EmployeeRepository repository;
-  public EmployeeService(EmployeeRepository repository) {
+  private final EmailService emailService;
+  public EmployeeService(EmployeeRepository repository, EmailService emailService) {
     this.repository = repository;
+    this.emailService = emailService;
   }
 
   public Employee getById(Long id) {
@@ -32,7 +34,9 @@ public class EmployeeService {
   }
 
   public Employee create(Employee newEmployee) {
-    return repository.save(newEmployee);
+    Employee createdEmployee = repository.save(newEmployee);
+    emailService.employeeCreated(createdEmployee.getId(), createdEmployee.getName(), createdEmployee.getDepartment());
+    return createdEmployee;
   }
 
   public Employee update(Employee updatedEmployee) {
